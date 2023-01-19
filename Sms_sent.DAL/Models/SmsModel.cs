@@ -3,16 +3,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Sms.Sent.DAL.Models
 {
-    public class Sms
+    public class SmsModel
     {
-        private int Id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Sender phone can't be null")]
-        private string SenderPhone { get; set; }
+        public string SenderPhone { get; set; }
 
         [Required(ErrorMessage = "Recepient phone can't be null")]
-        private string RecepientPhone { get; set; }
+        public string RecepientPhone { get; set; }
 
-        private string SmsText { get; set; }
+        public string SmsText { get; set; }
     }
 }

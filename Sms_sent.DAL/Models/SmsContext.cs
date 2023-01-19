@@ -4,7 +4,7 @@ namespace Sms.Sent.DAL.Models
 {
     public class SmsContext :DbContext
     {
-        public DbSet<Sms> Sms { get; set; }
+        public DbSet<SmsModel> SmsDB { get; set; }
 
         public SmsContext(DbContextOptions<SmsContext> options)
             :base(options)
