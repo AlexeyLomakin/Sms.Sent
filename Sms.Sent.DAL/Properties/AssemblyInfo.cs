@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SmsSent.BLL")]
+[assembly: AssemblyTitle("Sms.Sent.DAL")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SmsSent.BLL")]
+[assembly: AssemblyProduct("Sms.Sent.DAL")]
 [assembly: AssemblyCopyright("Copyright ©  2023")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("fb117ade-bc22-484e-ad73-755d6ff1f731")]
+[assembly: Guid("a2afb8ae-bb4d-46f2-8fa5-cb692e85b89d")]
 
 // Version information for an assembly consists of the following four values:
 //
