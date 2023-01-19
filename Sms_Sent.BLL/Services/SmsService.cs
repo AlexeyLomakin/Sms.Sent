@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sms.Sent.DAL.Models;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace Sms.Sent.BLL.Services

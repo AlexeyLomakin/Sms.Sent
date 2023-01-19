@@ -2,9 +2,55 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <meta name="viewport" content="width=device-width" />
+    <title>Список пользователей</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-
-</body>
+    <h2>Отправка СМС</h2>
+    <div id="errors" class="alert alert-danger" style="display:none;"></div>
+    <form name="SmsForm">
+        <input type="hidden" name="id" value="0" />
+        <div class="form-group col-md-5">
+            <label for="name">Номер отправителя:</label>
+            <input class="form-control" name="name" />
+        </div>
+        <div class="form-group col-md-5">
+            <label for="age">Номер получателя:</label>
+            <input class="form-control" name="age" type="number" />
+        </div>
+        <div class="form-group col-md-5">
+            <label for="age">Текст СМС</label>
+            <input class="form-control" name="age" type="number" />
+        </div>
+        <div class="panel-body">
+            <button type="submit" id="submit" class="btn btn-primary">Отправить</button>
+            <a id="reset" class="btn btn-primary">Сбросить</a>
+        </div>
+    </form>
+    <table class="table table-condensed table-striped  col-md-6">
+        <thead><tr><th>Номер отправителя</th><th>Номер получателя</th><th>Текст СМС</th><th>Статус</th></tr></thead>
+        <tbody>
+        </tbody>
+    </table>
+    <script>
+        //получение всех смс
+        async function GetSms()
+        {
+            const response = await fetch("api/sms",
+                {
+                    method: "GET",
+                    headers: { "Accept": "application/json" }
+                });
+            if (repsonse.ok == true)
+            {
+                const sms = await response.json();
+                let rows = document.querySelector("tbody");
+                sms.foreach(sms =>
+                    //добавление полученных элементов в таблицу
+                    rows.append(row(sms))
+                )};
+        }
+    </script>
+    </body>
 </html>
