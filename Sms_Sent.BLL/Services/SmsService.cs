@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Sms.Sent.DAL.Models;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore.Internal;
+using System.Linq;
 
 namespace Sms.Sent.BLL.Services
 {
@@ -27,6 +29,22 @@ namespace Sms.Sent.BLL.Services
             if (sms == null)
                 return NotFound();
             return new ObjectResult(sms);
+        }
+        [HttpPut]
+        public async Task<ActionResult<SmsModel>> Put(SmsModel sms)
+        {
+            if (sms == null)
+            {
+                return BadRequest();
+            }
+            if (!db.SmsDB.Any(x => x.Id == sms.Id))
+            {
+                return NotFound();
+            }
+
+            db.Update(sms);
+            await db.SaveChangesAsync();
+            return Ok(sms);
         }
     }
 }

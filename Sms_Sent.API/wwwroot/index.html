@@ -13,15 +13,15 @@
         <input type="hidden" name="id" value="0" />
         <div class="form-group col-md-5">
             <label for="name">Номер отправителя:</label>
-            <input class="form-control" name="name" />
+            <input class="form-control" name="SenderPhone" type="number" />
         </div>
         <div class="form-group col-md-5">
             <label for="age">Номер получателя:</label>
-            <input class="form-control" name="age" type="number" />
+            <input class="form-control" name="RecepientPhone"  type="number" />
         </div>
         <div class="form-group col-md-5">
             <label for="age">Текст СМС</label>
-            <input class="form-control" name="age" type="number" />
+            <input class="form-control" name="SmsText"/>
         </div>
         <div class="panel-body">
             <button type="submit" id="submit" class="btn btn-primary">Отправить</button>
@@ -50,6 +50,51 @@
                     //добавление полученных элементов в таблицу
                     rows.append(row(sms))
                 )};
+        }
+        //Добавление СМС
+        async function CreateSMS(SenderPhone, RecepientPhone, SmsText) {
+
+            const response = await fetch("api/users", {
+                method: "POST",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    SenderPhone: SenderPhone,
+                    RecepientPhone: RecepientPhone,
+                    SmsText: SmsText
+                })
+            });
+            if (response.ok === true) {
+                const sms = await response.json();
+                reset();
+                document.querySelector("tbody").append(row(sms));
+            }
+            else {
+                const errorData = await response.json();
+                console.log("errors", errorData);
+                if (errorData) {
+                    // ошибки вследствие валидации по атрибутам
+                    if (errorData.errors) {
+                        if (errorData.errors["SenderPhone"]) {
+                            addError(errorData.errors["SenderPhone"]);
+                        }
+                        if (errorData.errors["RecepientPhone"]) {
+                            addError(errorData.errors["RecepientPhone"]);
+                        }
+                    }
+                    // кастомные ошибки, определенные в контроллере
+                    // добавляем ошибки свойства Name
+                    if (errorData["SenderPhone"]) {
+                        addError(errorData["SenderPhone"]);
+                    }
+
+                    // добавляем ошибки свойства Age
+                    if (errorData["RecepientPhone"]) {
+                        addError(errorData["RecepientPhone"]);
+                    }
+                }
+
+                document.getElementById("errors").style.display = "block";
+            }
         }
     </script>
     </body>
