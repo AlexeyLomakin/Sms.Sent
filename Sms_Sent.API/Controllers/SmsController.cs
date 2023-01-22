@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Sms.Sent.API.Controllers
 {
     [ApiController]
-    public class SmsController : ControllerBase
+    public class SmsController : Controller
     {
         public SmsContext db;
         public SmsController(SmsContext context)

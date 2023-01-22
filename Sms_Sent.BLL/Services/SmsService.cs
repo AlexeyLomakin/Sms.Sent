@@ -8,7 +8,6 @@ using System.Linq;
 
 namespace Sms.Sent.BLL.Services
 {
-    [ApiController]
     class SmsService : ControllerBase
     {
         readonly SmsContext db;
