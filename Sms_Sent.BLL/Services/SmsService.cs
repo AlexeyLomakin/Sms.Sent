@@ -16,20 +16,20 @@ namespace Sms.Sent.BLL.Services
         {
             db = context;
         }
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<SmsModel>>> Get()
-        {
-            return await db.SmsDB.ToListAsync();
-        }
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<SmsModel>>> Get()
+        //{
+        //    return await db.SmsDB.ToListAsync();
+        //}
 
-        [HttpGet]
-        public async Task<ActionResult<SmsModel>> Get(int id)
-        {
-            SmsModel sms = await db.SmsDB.FirstOrDefaultAsync(x => x.Id == id);
-            if (sms == null)
-                return NotFound();
-            return new ObjectResult(sms);
-        }
+        //[HttpGet]
+        //public async Task<ActionResult<SmsModel>> Get(int id)
+        //{
+        //    SmsModel sms = await db.SmsDB.FirstOrDefaultAsync(x => x.Id == id);
+        //    if (sms == null)
+        //        return NotFound();
+        //    return new ObjectResult(sms);
+        //}
         [HttpPut]
         public async Task<ActionResult<SmsModel>> Put(SmsModel sms)
         {

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>Список пользователей</title>
+    <title>Отправка СМС</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
@@ -12,15 +12,15 @@
     <form name="SmsForm">
         <input type="hidden" name="id" value="0" />
         <div class="form-group col-md-5">
-            <label for="name">Номер отправителя:</label>
-            <input class="form-control" name="SenderPhone" type="number" />
+            <label for="SenderName">Имя отправителя:</label>
+            <input class="form-control" name="SenderName" />
         </div>
         <div class="form-group col-md-5">
-            <label for="age">Номер получателя:</label>
+            <label for="RecepientPhone">Номер получателя:</label>
             <input class="form-control" name="RecepientPhone"  type="number" />
         </div>
         <div class="form-group col-md-5">
-            <label for="age">Текст СМС</label>
+            <label for="SmsText">Текст СМС</label>
             <input class="form-control" name="SmsText"/>
         </div>
         <div class="panel-body">
@@ -29,7 +29,7 @@
         </div>
     </form>
     <table class="table table-condensed table-striped  col-md-6">
-        <thead><tr><th>Номер отправителя</th><th>Номер получателя</th><th>Текст СМС</th><th>Статус</th></tr></thead>
+        <thead><tr><th>Номер получателя</th><th>Текст СМС</th><th>Статус</th></tr></thead>
         <tbody>
         </tbody>
     </table>
@@ -52,13 +52,13 @@
                 )};
         }
         //Добавление СМС
-        async function CreateSMS(SenderPhone, RecepientPhone, SmsText) {
+        async function CreateSMS(SenderName, RecepientPhone, SmsText) {
 
             const response = await fetch("api/users", {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    SenderPhone: SenderPhone,
+                    SenderName: SenderName,
                     RecepientPhone: RecepientPhone,
                     SmsText: SmsText
                 })
@@ -74,8 +74,8 @@
                 if (errorData) {
                     // ошибки вследствие валидации по атрибутам
                     if (errorData.errors) {
-                        if (errorData.errors["SenderPhone"]) {
-                            addError(errorData.errors["SenderPhone"]);
+                        if (errorData.errors["SenderName"]) {
+                            addError(errorData.errors["SenderName"]);
                         }
                         if (errorData.errors["RecepientPhone"]) {
                             addError(errorData.errors["RecepientPhone"]);
@@ -83,8 +83,8 @@
                     }
                     // кастомные ошибки, определенные в контроллере
                     // добавляем ошибки свойства Name
-                    if (errorData["SenderPhone"]) {
-                        addError(errorData["SenderPhone"]);
+                    if (errorData["SenderName"]) {
+                        addError(errorData["SenderName"]);
                     }
 
                     // добавляем ошибки свойства Age

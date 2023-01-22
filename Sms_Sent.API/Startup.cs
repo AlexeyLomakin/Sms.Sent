@@ -9,10 +9,10 @@ namespace Sms.Sent.API
 {
     public class Startup
     {
-        private readonly IConfiguration _configuration;
+        private readonly IConfiguration configuration;
         public Startup(IConfiguration configuration)
         {
-            _configuration = configuration;
+            this.configuration = configuration;
         }
 
         public void ConfigureServices(IServiceCollection services)
@@ -20,7 +20,7 @@ namespace Sms.Sent.API
             //использование контроллеров без представлений
             services.AddControllers();
             services.AddDbContext<SmsContext>(options =>
-            options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection")));
+            options.UseNpgsql(configuration.GetConnectionString("Host=localhost;Port=5433;Database=smsdb;Username=postgres;Password=postgres")));
 
             services.AddMvc()
                 .AddXmlSerializerFormatters()
@@ -36,7 +36,6 @@ namespace Sms.Sent.API
             app.UseDeveloperExceptionPage();
             app.UseDefaultFiles();
             app.UseStaticFiles();
-
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>

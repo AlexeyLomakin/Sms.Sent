@@ -133,7 +133,6 @@
     <Reference Include="Microsoft.Analytics.Types" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="Models\SmsModel.cs" />
     <Compile Include="Models\SmsContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

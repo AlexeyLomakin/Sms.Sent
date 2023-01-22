@@ -8,7 +8,7 @@ namespace Sms.Sent.DAL.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Sender phone can't be null")]
-        public string SenderPhone { get; set; }
+        public string SenderName { get; set; }
 
         [Required(ErrorMessage = "Recepient phone can't be null")]
         public string RecepientPhone { get; set; }
