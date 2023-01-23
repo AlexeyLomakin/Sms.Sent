@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Sms.Sent.DAL.Models;
-using Microsoft.EntityFrameworkCore;
+
 using Microsoft.Net.Http.Headers;
 using Microsoft.Extensions.Configuration;
+using Sms.Sent.API.Controllers;
+using Sms.Sent.BLL;
 
 namespace Sms.Sent.API
 {
@@ -17,11 +19,12 @@ namespace Sms.Sent.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //использование контроллеров без представлений
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             services.AddControllers();
-            services.AddDbContext<SmsContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("Host=localhost;Port=5433;Database=smsdb;Username=postgres;Password=postgres")));
-
+            
+            //services.AddDbContext<SmsContext>(options =>
+            //options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            services.AddBLLDataServices();
             services.AddMvc()
                 .AddXmlSerializerFormatters()
                 .AddMvcOptions(opts =>
@@ -40,7 +43,7 @@ namespace Sms.Sent.API
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers(); //Подключаем маршрутизацию на контроллеры
+                endpoints.MapControllers(); //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
             });
         }
     }

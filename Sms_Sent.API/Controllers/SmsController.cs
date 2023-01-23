@@ -3,31 +3,32 @@ using Microsoft.EntityFrameworkCore;
 using Sms.Sent.DAL.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Sms.Sent.BLL.Services;
+using System.Linq;
 
 namespace Sms.Sent.API.Controllers
 {
     [ApiController]
+    [Route("api/[controller]")]
     public class SmsController : Controller
     {
-        public SmsContext db;
-        public SmsController(SmsContext context)
+        private SmsService _service;
+
+        public SmsController (SmsService service) 
         {
-            db = context;
-        }
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<SmsModel>>> Get()
-        {
-            return await db.SmsDB.ToListAsync();
+            _service = service;
         }
 
         [HttpGet]
-        public async Task<ActionResult<SmsModel>> Get(int id)
+        public  ActionResult<IEnumerable<SmsModel>> GetAllSms()
         {
-            SmsModel sms = await db.SmsDB.FirstOrDefaultAsync(x => x.Id == id);
-            if (sms == null)
-                return NotFound();
-            return new ObjectResult(sms);
-
+            var smss =  _service.GetAll();
+            
+            return Ok(smss);
         }
+
+        //[HttpPost]
+        //public Task<ActionResult<SmsModel>>
+
     }
 }

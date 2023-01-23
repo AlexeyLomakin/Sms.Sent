@@ -7,6 +7,7 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
+    <div>@Controllers.SmsController</div>
     <h2>Отправка СМС</h2>
     <div id="errors" class="alert alert-danger" style="display:none;"></div>
     <form name="SmsForm">
@@ -34,39 +35,51 @@
         </tbody>
     </table>
     <script>
+        // сброс формы
+        function reset() {
+            const form = document.forms["userForm"];
+            form.reset();
+            form.elements["id"].value = 0;
+        }
+        function addError(errors) {
+            errors.forEach(error => {
+                const p = document.createElement("p");
+                p.append(error);
+                document.getElementById("errors").append(p);
+            });
+        }
         //получение всех смс
-        async function GetSms()
-        {
-            const response = await fetch("api/sms",
+        async function Get() {
+            const response = await fetch("api/",
                 {
                     method: "GET",
                     headers: { "Accept": "application/json" }
                 });
-            if (repsonse.ok == true)
-            {
-                const sms = await response.json();
+            if (repsonse.ok == true) {
+                const response = await response.json();
                 let rows = document.querySelector("tbody");
                 sms.foreach(sms =>
                     //добавление полученных элементов в таблицу
-                    rows.append(row(sms))
-                )};
+                    rows.append(row())
+                )
+            };
         }
         //Добавление СМС
-        async function CreateSMS(SenderName, RecepientPhone, SmsText) {
+        async function Create(RecepientPhone, Text, DateSend, ) {
 
-            const response = await fetch("api/users", {
+            const response = await fetch("api/", {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    SenderName: SenderName,
                     RecepientPhone: RecepientPhone,
-                    SmsText: SmsText
+                    Text: Text,
+                    Date: DateSend
                 })
             });
             if (response.ok === true) {
-                const sms = await response.json();
+                const response = await response.json();
                 reset();
-                document.querySelector("tbody").append(row(sms));
+                document.querySelector("tbody").append(row());
             }
             else {
                 const errorData = await response.json();
@@ -95,6 +108,52 @@
 
                 document.getElementById("errors").style.display = "block";
             }
+        }
+        // создание строки для таблицы
+        function row(sms) {
+
+            const tr = document.createElement("tr");
+            tr.setAttribute("data-rowid", sms.id);
+
+            const RecepientPhoneTd = document.createElement("td");
+            RecepientPhoneTd.append(sms.RecepientPhone);
+            tr.append(RecepientPhoneTd);
+
+            const SmsTextTd = document.createElement("td");
+            SmsTextTd.append(sms.SmsText);
+            tr.append(SmsTextTd);
+
+            const DateSendTd = document.createElement("td");
+            DateSendTd.append(sms.DateSend);
+            tr.append(DateSendTd);
+
+            const linksTd = document.createElement("td");
+
+            const editLink = document.createElement("a");
+            editLink.setAttribute("data-id", sms.id);
+            editLink.setAttribute("style", "cursor:pointer;padding:15px;");
+            editLink.append("Изменить");
+            editLink.addEventListener("click", e => {
+
+                e.preventDefault();
+                Getsms(sms.id);
+            });
+            linksTd.append(editLink);
+
+            const removeLink = document.createElement("a");
+            removeLink.setAttribute("data-id", sms.id);
+            removeLink.setAttribute("style", "cursor:pointer;padding:15px;");
+            removeLink.append("Удалить");
+            removeLink.addEventListener("click", e => {
+
+                e.preventDefault();
+                Deletesms(sms.id);
+            });
+
+            linksTd.append(removeLink);
+            tr.appendChild(linksTd);
+
+            return tr;
         }
     </script>
     </body>
