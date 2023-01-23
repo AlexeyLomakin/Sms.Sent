@@ -27,8 +27,11 @@ namespace Sms.Sent.API.Controllers
             return Ok(smss);
         }
 
-        //[HttpPost]
-        //public Task<ActionResult<SmsModel>>
+        [HttpPost]
+        public ActionResult<IEnumerable<SmsModel>> PostSms(SmsModel sms)
+        {
+            return Ok(_service.PostSms(sms));
+        }
 
     }
 }

@@ -18,14 +18,14 @@ namespace Sms.Sent.BLL.Services
         public IEnumerable<SmsModel> GetAll() 
         {
             List<SmsModel> models = new List<SmsModel>();
-            models.Add(new SmsModel {Id = 1, DateSend = System.DateTime.Now, RecepientPhone = 98746, SmsStatus = "send", SmsText = "sdasdasdas" });
+            models.Add(new SmsModel {Id = 0, DateSend = System.DateTime.Now, RecepientPhone = 98746, SmsStatus = "send", SmsText = "sdasdasdas" });
             return  models;
         }
         public async  Task PostSms(SmsModel sms)
         {
+            db.Add(sms);
             db.SmsDB.Add(sms);
             await db.SaveChangesAsync();
-
         }
 
         //[HttpPut]

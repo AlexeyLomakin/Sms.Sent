@@ -139,6 +139,11 @@
     <Reference Include="Microsoft.Analytics.Types" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\20230123183116_SmsDb.cs" />
+    <Compile Include="Migrations\20230123183116_SmsDb.designer.cs">
+      <DependentUpon>20230123183116_SmsDb.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\SmsContextModelSnapshot.cs" />
     <Compile Include="Models\SmsModel.cs" />
     <Compile Include="Models\SmsContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

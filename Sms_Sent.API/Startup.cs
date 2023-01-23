@@ -1,11 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Sms.Sent.DAL.Models;
-
 using Microsoft.Net.Http.Headers;
 using Microsoft.Extensions.Configuration;
-using Sms.Sent.API.Controllers;
-using Sms.Sent.BLL;
+using Microsoft.EntityFrameworkCore;
 
 namespace Sms.Sent.API
 {
@@ -21,9 +19,9 @@ namespace Sms.Sent.API
         {
             //������������� ������������ ��� �������������
             services.AddControllers();
-            
-            //services.AddDbContext<SmsContext>(options =>
-            //options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<SmsContext>(options =>
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
             services.AddBLLDataServices();
             services.AddMvc()
                 .AddXmlSerializerFormatters()
