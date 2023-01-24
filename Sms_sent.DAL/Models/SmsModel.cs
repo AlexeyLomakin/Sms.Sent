@@ -8,7 +8,7 @@ namespace Sms.Sent.DAL.Models
         [Key]
         public int Id { get; set; }
 
-        public int RecepientPhone { get; set; }
+        public string RecepientPhone { get; set; }
 
         public string SmsText { get; set; }
         public DateTime DateSend { get; set; }

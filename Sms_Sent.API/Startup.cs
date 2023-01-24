@@ -17,7 +17,6 @@ namespace Sms.Sent.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            //������������� ������������ ��� �������������
             services.AddControllers();
 
             services.AddDbContext<SmsContext>(options =>
@@ -41,7 +40,7 @@ namespace Sms.Sent.API
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers(); //���������� ������������� �� �����������
+                endpoints.MapControllers();
             });
         }
     }

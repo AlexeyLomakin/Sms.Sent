@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Sms.Sent.BLL.Services;
+using Sms_Sent.BLL.Abstratctions;
 
 namespace Sms.Sent.API
 {
@@ -7,7 +8,7 @@ namespace Sms.Sent.API
     {
         public static IServiceCollection AddBLLDataServices(this IServiceCollection services)
         {
-            services.AddScoped<SmsService>();
+            services.AddScoped<ISmsService,SmsService>();
             return services;
         }
     }

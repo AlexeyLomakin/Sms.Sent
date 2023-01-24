@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Sms.Sent.DAL.Models;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Sms.Sent.BLL.Services;
-using System.Linq;
+using Sms_Sent.BLL.Abstratctions;
 
 namespace Sms.Sent.API.Controllers
 {
@@ -12,9 +9,9 @@ namespace Sms.Sent.API.Controllers
     [Route("api/[controller]")]
     public class SmsController : Controller
     {
-        private SmsService _service;
+        private ISmsService _service;
 
-        public SmsController (SmsService service) 
+        public SmsController (ISmsService service) 
         {
             _service = service;
         }
@@ -30,6 +27,7 @@ namespace Sms.Sent.API.Controllers
         [HttpPost]
         public ActionResult<IEnumerable<SmsModel>> PostSms(SmsModel sms)
         {
+
             return Ok(_service.PostSms(sms));
         }
 

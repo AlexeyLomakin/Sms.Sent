@@ -7,7 +7,6 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
-    <div>@Controllers.SmsController</div>
     <h2>Отправка СМС</h2>
     <div id="errors" class="alert alert-danger" style="display:none;"></div>
     <form name="SmsForm">
@@ -18,7 +17,7 @@
         </div>
         <div class="form-group col-md-5">
             <label for="RecepientPhone">Номер получателя:</label>
-            <input class="form-control" name="RecepientPhone"  type="number" />
+            <input class="form-control" name="RecepientPhone"/>
         </div>
         <div class="form-group col-md-5">
             <label for="SmsText">Текст СМС</label>
@@ -37,7 +36,7 @@
     <script>
         // сброс формы
         function reset() {
-            const form = document.forms["userForm"];
+            const form = document.forms["SmsForm"];
             form.reset();
             form.elements["id"].value = 0;
         }
@@ -49,112 +48,82 @@
             });
         }
         //получение всех смс
-        async function Get() {
+        async function GetAllSms() {
             const response = await fetch("api/sms",
                 {
                     method: "GET",
                     headers: { "Accept": "application/json" }
                 });
-            if (repsonse.ok == true) {
-                const response = await response.json();
+            if (response.ok == true) {
+                const smsResp = await response.json();
                 let rows = document.querySelector("tbody");
-                sms.foreach(sms =>
+                smsResp.forEach(sms =>
                     //добавление полученных элементов в таблицу
-                    rows.append(row())
+                    rows.append(row(sms))
                 )
             };
         }
         //Добавление СМС
-        async function Create(RecepientPhone, Text, DateSend, ) {
+        async function PostSms(RecepientPhone, Text) {
 
-            const response = await fetch("api/", {
+            const response = await fetch("api/sms", {
                 method: "POST",
                 headers: { "Accept": "application/json", "Content-Type": "application/json" },
                 body: JSON.stringify({
-                    RecepientPhone: RecepientPhone,
-                    Text: Text,
-                    Date: DateSend
+                    recepientPhone: RecepientPhone,
+                    smsText: Text
                 })
             });
             if (response.ok === true) {
-                const response = await response.json();
+                const sms = await response.json();
                 reset();
-                document.querySelector("tbody").append(row());
+                document.querySelector("tbody").append(row(sms));
             }
             else {
                 const errorData = await response.json();
                 console.log("errors", errorData);
-                if (errorData) {
-                    // ошибки вследствие валидации по атрибутам
-                    if (errorData.errors) {
-                        if (errorData.errors["SenderName"]) {
-                            addError(errorData.errors["SenderName"]);
-                        }
-                        if (errorData.errors["RecepientPhone"]) {
-                            addError(errorData.errors["RecepientPhone"]);
-                        }
-                    }
-                    // кастомные ошибки, определенные в контроллере
-                    // добавляем ошибки свойства Name
-                    if (errorData["SenderName"]) {
-                        addError(errorData["SenderName"]);
-                    }
-
-                    // добавляем ошибки свойства Age
-                    if (errorData["RecepientPhone"]) {
-                        addError(errorData["RecepientPhone"]);
-                    }
-                }
-
                 document.getElementById("errors").style.display = "block";
             }
         }
-        // создание строки для таблицы
-        function row(sms) {
-
+        function row(sms)
+        {
             const tr = document.createElement("tr");
             tr.setAttribute("data-rowid", sms.id);
 
-            const RecepientPhoneTd = document.createElement("td");
-            RecepientPhoneTd.append(sms.RecepientPhone);
-            tr.append(RecepientPhoneTd);
+            const dateTD = document.createElement("td");
+            dateTD.append(sms.dateSend);
+            tr.append(dateTD);
 
-            const SmsTextTd = document.createElement("td");
-            SmsTextTd.append(sms.SmsText);
-            tr.append(SmsTextTd);
+            const phoneTd = document.createElement("td");
+            phoneTd.append(sms.recepientPhone);
+            tr.append(phoneTd);
 
-            const DateSendTd = document.createElement("td");
-            DateSendTd.append(sms.DateSend);
-            tr.append(DateSendTd);
+            const textTd = document.createElement("td");
+            textTd.append(sms.smsText);
+            tr.append(textTd);
+
+            const statusTd = document.createElement("td");
+            statusTd.append(sms.smsStatus);
+            tr.append(statusTd);
 
             const linksTd = document.createElement("td");
-
-            const editLink = document.createElement("a");
-            editLink.setAttribute("data-id", sms.id);
-            editLink.setAttribute("style", "cursor:pointer;padding:15px;");
-            editLink.append("Изменить");
-            editLink.addEventListener("click", e => {
-
-                e.preventDefault();
-                Getsms(sms.id);
-            });
-            linksTd.append(editLink);
-
-            const removeLink = document.createElement("a");
-            removeLink.setAttribute("data-id", sms.id);
-            removeLink.setAttribute("style", "cursor:pointer;padding:15px;");
-            removeLink.append("Удалить");
-            removeLink.addEventListener("click", e => {
-
-                e.preventDefault();
-                Deletesms(sms.id);
-            });
-
-            linksTd.append(removeLink);
             tr.appendChild(linksTd);
 
             return tr;
         }
+        document.forms["SmsForm"].addEventListener("submit", e => {
+            e.preventDefault();
+            document.getElementById("errors").innerHTML = "";
+            document.getElementById("errors").style.display = "none";
+
+            const form = document.forms["SmsForm"];
+            const recepientPhone = form.elements["RecepientPhone"].value;
+            const smsText = form.elements["SmsText"].value;
+            PostSms(recepientPhone, smsText);
+            GetAllSms();
+
+        });
+        GetAllSms();
     </script>
     </body>
 </html>

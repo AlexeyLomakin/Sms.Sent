@@ -201,6 +201,8 @@
     <Reference Include="Microsoft.Analytics.Types" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstratctions\ISmsService.cs" />
+    <Compile Include="Helpers\Randomizer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SmsService.cs" />
   </ItemGroup>
