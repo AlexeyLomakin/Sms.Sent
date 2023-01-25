@@ -25,7 +25,6 @@ namespace Sms.Sent.BLL.Services
 
         public IEnumerable<SmsModel> GetAll() 
         {
-            List<SmsModel> models = new List<SmsModel>();
             return  db.SmsDB.ToList();
         }
 
@@ -33,7 +32,6 @@ namespace Sms.Sent.BLL.Services
         {
             int randomStatus = Randomizer.GetRandomStatus();
 
-            List<SmsModel> models = new List<SmsModel>();
             sms.DateSend = System.DateTime.UtcNow;
             sms.SmsStatus = status[randomStatus];
             db.SmsDB.Add(sms);
