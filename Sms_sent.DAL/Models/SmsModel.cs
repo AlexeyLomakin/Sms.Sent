@@ -11,7 +11,9 @@ namespace Sms.Sent.DAL.Models
         public string RecepientPhone { get; set; }
 
         public string SmsText { get; set; }
+
         public DateTime DateSend { get; set; }
+
         public string SmsStatus { get; set; }
     }
 }
