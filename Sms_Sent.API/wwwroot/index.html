@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width" />
     <title>Отправка СМС</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.0/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="JsScripts/JavaScript.js"></script>
 </head>
-<body>
+<body  onload="GetAllSms();">
     <h2>Отправка СМС</h2>
     <div id="errors" class="alert alert-danger" style="display:none;"></div>
     <form name="SmsForm">
@@ -32,7 +33,20 @@
         <tbody>
         </tbody>
     </table>
-    <script src="JsScripts/JavaScript.js">GetAllSms();</script>
-    <script src="JsScripts/JavaScript.js">PostSms(RecepientPhone, Text);</script>
+    <script>
+        //кнопка отправить
+        document.forms["SmsForm"].addEventListener("submit", e => {
+            e.preventDefault();
+            document.getElementById("errors").innerHTML = "";
+            document.getElementById("errors").style.display = "none";
+
+            const form = document.forms["SmsForm"];
+            const recepientPhone = form.elements["RecepientPhone"].value;
+            const smsText = form.elements["SmsText"].value;
+            PostSms(recepientPhone, smsText);
+            GetAllSms();
+
+        });
+    </script>
 </body>
 </html>

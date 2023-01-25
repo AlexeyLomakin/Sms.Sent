@@ -14,7 +14,7 @@ namespace Sms_sent.DAL.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RecepientPhone = table.Column<int>(nullable: false),
+                    RecepientPhone = table.Column<string>(nullable: false),
                     SmsText = table.Column<string>(nullable: true),
                     DateSend = table.Column<DateTime>(nullable: false),
                     SmsStatus = table.Column<string>(nullable: true)

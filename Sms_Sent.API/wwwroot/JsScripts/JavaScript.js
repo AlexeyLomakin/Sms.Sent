@@ -8,7 +8,7 @@ async function GetAllSms() {
     if (response.ok == true) {
         const smsResp = await response.json();
         let rows = document.querySelector("tbody");
-        smsResp.forEach(sms =>
+        smsResp.forEach(sms => 
             //добавление полученных элементов в таблицу
             rows.append(row(sms))
         )
@@ -36,6 +36,7 @@ async function PostSms(RecepientPhone, Text) {
         document.getElementById("errors").style.display = "block";
     }
 }
+//отрисовка смс в таблице
 function row(sms) {
     const tr = document.createElement("tr");
     tr.setAttribute("data-rowid", sms.id);
@@ -61,15 +62,3 @@ function row(sms) {
 
     return tr;
 }
-document.forms["SmsForm"].addEventListener("submit", e => {
-    e.preventDefault();
-    document.getElementById("errors").innerHTML = "";
-    document.getElementById("errors").style.display = "none";
-
-    const form = document.forms["SmsForm"];
-    const recepientPhone = form.elements["RecepientPhone"].value;
-    const smsText = form.elements["SmsText"].value;
-    PostSms(recepientPhone, smsText);
-    GetAllSms();
-
-});

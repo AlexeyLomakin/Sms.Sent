@@ -23,11 +23,14 @@ namespace Sms.Sent.BLL.Services
             };
         }
 
+        //Метод получения всех смс
         public IEnumerable<SmsModel> GetAll() 
         {
             return  db.SmsDB.ToList();
         }
 
+
+        //Добалвение нового СМС
         public async  Task PostSms(SmsModel sms)
         {
             int randomStatus = Randomizer.GetRandomStatus();
@@ -35,7 +38,8 @@ namespace Sms.Sent.BLL.Services
             sms.DateSend = System.DateTime.UtcNow;
             sms.SmsStatus = status[randomStatus];
             db.SmsDB.Add(sms);
-            await db.SaveChangesAsync();           
+            await db.SaveChangesAsync();
+
         }
     }
 }

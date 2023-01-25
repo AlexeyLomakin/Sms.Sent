@@ -29,8 +29,8 @@ namespace Sms_sent.DAL.Migrations
                     b.Property<DateTime>("DateSend")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("RecepientPhone")
-                        .HasColumnType("integer");
+                    b.Property<string>("RecepientPhone")
+                        .HasColumnType("text");
 
                     b.Property<string>("SmsStatus")
                         .HasColumnType("text");

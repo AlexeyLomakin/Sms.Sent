@@ -34,8 +34,10 @@ namespace Sms.Sent.API
         public void Configure(IApplicationBuilder app)
         {
             app.UseDeveloperExceptionPage();
+
             app.UseDefaultFiles();
             app.UseStaticFiles();
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
