@@ -17,7 +17,8 @@ namespace Sms.Sent.API.Controllers
         }
 
         [HttpGet]
-        public  ActionResult<IEnumerable<SmsModel>> GetAllSms()
+        //GET запрос для получения всех СМС
+        public ActionResult<IEnumerable<SmsModel>> GetAllSms()
         {
             var smss =  _service.GetAll();
             
@@ -25,6 +26,7 @@ namespace Sms.Sent.API.Controllers
         }
 
         [HttpPost]
+        //POST запрос для добавления нового СМС
         public ActionResult<IEnumerable<SmsModel>> PostSms(SmsModel sms)
         {
 

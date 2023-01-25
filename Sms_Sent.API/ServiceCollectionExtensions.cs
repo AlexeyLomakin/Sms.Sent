@@ -6,6 +6,7 @@ namespace Sms.Sent.API
 {
     internal static class ServiceCollectionExtensions
     {
+        //Подключение сервиса
         public static IServiceCollection AddBLLDataServices(this IServiceCollection services)
         {
             services.AddScoped<ISmsService,SmsService>();

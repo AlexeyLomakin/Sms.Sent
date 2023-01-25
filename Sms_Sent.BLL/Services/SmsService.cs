@@ -23,12 +23,14 @@ namespace Sms.Sent.BLL.Services
             };
         }
 
+        //Метод получения всех смс
         public IEnumerable<SmsModel> GetAll() 
         {
             List<SmsModel> models = new List<SmsModel>();
             return  db.SmsDB.ToList();
         }
 
+        //Добалвение нового СМС
         public async  Task PostSms(SmsModel sms)
         {
             int randomStatus = Randomizer.GetRandomStatus();
